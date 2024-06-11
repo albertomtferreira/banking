@@ -1,0 +1,12 @@
+React
+NextJS
+
+Plaid to wolrd leadind API banking - variety of test accounts and institutions available to test - Using Sandbox
+
+appwrite - open source to build the backend
+
+ChartJS to create ChartJS
+
+Tailwind css with shadcn/ui
+
+sentry for security
