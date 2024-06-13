@@ -10,3 +10,6 @@ ChartJS to create ChartJS
 Tailwind css with shadcn/ui
 
 sentry for security
+
+
+Simple Browser
