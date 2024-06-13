@@ -7,6 +7,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // TODO
+  // ensure that the below will be updated
   const loggedIn = {
     $id: "1",
     email: "email@gmail.com",
