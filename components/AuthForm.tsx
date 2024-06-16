@@ -2,20 +2,24 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { z } from 'zod'
+import { set, z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import CustomInput from './CustomInput'
 import { authFormSchema } from '@/lib/utils'
+import { Loader2 } from 'lucide-react'
 
 const AuthForm = ({ type }: { type: string }) => {
   const [user, setUser] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const formSchema = authFormSchema(type)
 
   // 1. Define Form
-  const form = useForm<z.infer<typeof authFormSchema>>({
-    resolver: zodResolver(authFormSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -23,9 +27,12 @@ const AuthForm = ({ type }: { type: string }) => {
   })
 
   // 2. Define a Submit Handler
-  function onSubmit(values: z.infer<typeof authFormSchema>) {
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true)
+
     console.log(values)
 
+    setIsLoading(false)
   }
 
   return (
@@ -40,13 +47,13 @@ const AuthForm = ({ type }: { type: string }) => {
             {user
               ? "Link Account"
               : type === "sign-in"
-                ? "Sign-in"
-                : "Sign-up"
+                ? "Sign In"
+                : "Sign Up"
             }
             <p className='text-16 font-normal text-gray-600'>
               {user
                 ? "Link your account to get started"
-                : "PLease enter your details"
+                : "Please enter your details"
               }
             </p>
           </h1>
@@ -55,48 +62,66 @@ const AuthForm = ({ type }: { type: string }) => {
       {user ? (
         <div className='flex flex-col gap-4'>
           {/* TODO - Plaid Link */}
+          Plaid Link
 
         </div>
       ) : (
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              {/* <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <div className='form-item'>
-                    <FormLabel className='form-label'>
-                      Email address
-                    </FormLabel>
-                    <div className='flex flex-col w-full'>
-                      <FormControl>
-                        <Input
-                          placeholder='Enter your email'
-                          className='input-class'
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage
-                        className='form-message mt-2'
-                      />
-                    </div>
-                  </div>
-                )}
-              /> */}
-              {/* Control add new inputs by adding them to authFormSchema */}
-              <CustomInput
-                control={form.control} name="email" label="Email address" placeholder="Enter your email" type="text"
-              />
-              <CustomInput
-                control={form.control} name="password" label="Password" placeholder="Enter your password" type="password"
-              />
-              <CustomInput
-                control={form.control} name="username" label="Username" placeholder="Enter your username" type="text"
-              />
-              <Button type="submit">Submit</Button>
+              {
+                type === "sign-up" && (
+                  <>
+                    <CustomInput control={form.control} name="firstName" label="First Name" placeholder="Enter your first name" type="text" />
+                    <CustomInput control={form.control} name="lastName" label="Last Name" placeholder="Enter your last name" type="text" />
+
+                    <CustomInput control={form.control} name="address" label="Address" placeholder="Enter your specific address" type="text" />
+
+                    <CustomInput control={form.control} name="city" label="City" placeholder="ex: London" type="text" />
+                    <CustomInput control={form.control} name="postCode" label="Post Code" placeholder="ex: N1 2HA" type="text" />
+
+                    <CustomInput control={form.control} name="dateOfBirth" label="Date of Birth" placeholder="YYYY-MM-DD" type="text" />
+                    <CustomInput control={form.control} name="nin" label="NIN" placeholder="ex: XX123456Z" type="text" />
+
+
+                    <CustomInput control={form.control} name="email" label="Email address" placeholder="Enter your email" type="text" />
+                    <CustomInput control={form.control} name="password" label="Password" placeholder="Enter your password" type="password" />
+                  </>
+                )
+              }
+              {
+                type === "sign-in" && (
+                  <>
+                    <CustomInput control={form.control} name="email" label="Email address" placeholder="Enter your email" type="text" />
+                    <CustomInput control={form.control} name="password" label="Password" placeholder="Enter your password" type="password" />
+                  </>
+                )
+              }
+              <div className='flex flex-col gap-4'>
+                <Button type="submit" className='form-btn' disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 size={20} className='animate-spin' />
+                      &nbsp; Submitting...
+                    </>
+                  ) : type === "sign-in"
+                    ? "Sign in" : "Sign up"
+                  }
+                </Button>
+              </div>
+
             </form>
           </Form>
+          <footer className='flex justify-center gap-2 py-2'>
+            <p className='text-14 font-normal text-gray-600'>
+              {type === "sign-in"
+                ? "Don't have an account?"
+                : "Already have an account?"}
+            </p>
+            <Link href={type === "sign-in" ? "/sign-up" : "/sign-in"} className='form-link'>
+              {type === "sign-in" ? "Sign up" : "Sign in"}
+            </Link>
+          </footer>
         </>
       )}
     </section>

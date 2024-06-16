@@ -195,15 +195,42 @@ export const getTransactionStatus = (date: Date) => {
   return date > twoDaysAgo ? "Processing" : "Success";
 };
 
-export const authFormSchema = z.object({
+
+
+
+export const authFormSchema = (type: string) => z.object({
+  //Sign Up
+  firstName: type === "sign-in" ? z.string().optional() : z
+    .string()
+    .min(2, { message: "First name must be at least 2 characters" })
+    .max(30, { message: "First name must not be longer than 30 characters" }),
+  lastName: type === "sign-in" ? z.string().optional() : z
+    .string()
+    .min(2, { message: "Last name must be at least 2 characters" })
+    .max(30, { message: "Last name must not be longer than 30 characters" }),
+  address: type === "sign-in" ? z.string().optional() : z
+    .string()
+    .min(4, { message: "Address must be at least 4 characters" }),
+  city: type === "sign-in" ? z.string().optional() : z
+    .string()
+    .min(4, { message: "City must be at least 4 characters" }),
+  postCode: type === "sign-in" ? z.string().optional() : z
+    .string()
+    .min(5, { message: "Post code must be at least 5 characters" }),
+  dateOfBirth: type === "sign-in" ? z.string().optional() : z
+    .string().refine((value) => {
+      const date = new Date(value);
+      return !isNaN(date.getTime());
+    }, "Invalid date of birth"),
+  nin: type === "sign-in" ? z.string().optional() : z
+    .string()
+    .min(8, { message: "NIN must be at 9 characters long" }),
+
+  //Sign In & Sign Up
   email: z
     .string()
     .email({ message: "Invalid email address" }),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters" }),
-  username: z
-  .string()
-  .min(4, { message: "Username must be at least 4 characters" })
-  .max(30, { message: "Username must not be longer than 30 characters" }),
 })
