@@ -1,37 +1,27 @@
 import MobileNavbar from "@/components/MobileNavbar";
 import Sidebar from "@/components/Sidebar";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
-export default function RootLayout({
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // TODO
-  // ensure that the below will be updated
-  const loggedIn = {
-    $id: "1",
-    email: "email@gmail.com",
-    userId: "userId",
-    dwollaCustomerUrl: "",
-    dwollaCustomerId: "",
-    firstName: "Alberto",
-    lastName: "Tao",
-    address1: "",
-    city: "",
-    state: "",
-    postalCode: "",
-    dateOfBirth: "",
-    ssn: "",
-  }
+
+  const loggedIn = await getLoggedInUser()
+  if (!loggedIn) redirect("/sign-in")
+
   return (
     <main className="flex h-screen w-full font-inter">
-      <Sidebar user={loggedIn}/>
+      <Sidebar user={loggedIn} />
       <div className="flex size-full flex-col">
         <div className="root-layout">
-          <Image src="./icons/logo.svg" width={30} height={30} alt="Horizon Logo"/>
+          <Image src="./icons/logo.svg" width={30} height={30} alt="Horizon Logo" />
           <div>
-            <MobileNavbar user={loggedIn}/>
+            <MobileNavbar user={loggedIn} />
           </div>
         </div>
         {children}

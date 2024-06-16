@@ -1,13 +1,14 @@
 "use client"
 import React from 'react'
-import {Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet"
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import Image from 'next/image'
 import Link from 'next/link'
 import { sidebarLinks } from '@/constants'
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
+import Footer from './Footer'
 
-const MobileNavbar = ({user}:MobileNavProps) => {
+const MobileNavbar = ({ user }: MobileNavProps) => {
   const pathname = usePathname()
   return (
     <section className='w-full max-w-[264px]'>
@@ -29,21 +30,21 @@ const MobileNavbar = ({user}:MobileNavProps) => {
           <div className='mobilenav-sheet'>
             <SheetClose asChild>
               <nav className='flex h-full flex-col gap-6 pt-16 text-white'>
-                {sidebarLinks.map((item)=>{
+                {sidebarLinks.map((item) => {
                   const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`)
-                  return(
+                  return (
                     <SheetClose asChild key={item.route}>
-                      <Link href={item.route} key={item.label} className={cn("mobilenav-sheet_close w-full",{"bg-bank-gradient":isActive})}>
-                        
-                          <Image 
-                            src={item.imgURL}
-                            alt={item.label}
-                            width={20}
-                            height={20}
-                            className={cn({"brightness-[3] invert-0": isActive,})}
-                          />
-                        
-                        <p className={cn("text-16 font-semibold text-black-2", {"text-white":isActive})}>{item.label}</p>
+                      <Link href={item.route} key={item.label} className={cn("mobilenav-sheet_close w-full", { "bg-bank-gradient": isActive })}>
+
+                        <Image
+                          src={item.imgURL}
+                          alt={item.label}
+                          width={20}
+                          height={20}
+                          className={cn({ "brightness-[3] invert-0": isActive, })}
+                        />
+
+                        <p className={cn("text-16 font-semibold text-black-2", { "text-white": isActive })}>{item.label}</p>
                       </Link>
                     </SheetClose>
                   )
@@ -51,8 +52,8 @@ const MobileNavbar = ({user}:MobileNavProps) => {
                 USER
               </nav>
             </SheetClose>
-            FOOTER
-          </div>          
+            <Footer user={user} type="mobile" />
+          </div>
         </SheetContent>
       </Sheet>
     </section>

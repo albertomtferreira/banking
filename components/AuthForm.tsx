@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { date, set, z } from 'zod'
+import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
 import { Button } from "@/components/ui/button"
@@ -11,11 +11,13 @@ import CustomInput from './CustomInput'
 import { authFormSchema } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { signIn, signUp } from '@/lib/actions/user.actions'
 
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter()
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+
 
   const formSchema = authFormSchema(type)
 
@@ -31,27 +33,26 @@ const AuthForm = ({ type }: { type: string }) => {
   // 2. Define a Submit Handler
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true)
-
     try {
-      // TODO - sign up with Appwrite & create plaid link token
+      // TODO - Create plaid link token
       if (type === "sign-up") {
-        // TODO - create signUp function
-        // const newUser = await signUp(values)
-        // setUser(newUser)
+        const newUser = await signUp(values)
+        setUser(newUser)
       } else if (type === "sign-in") {
-        // TODO - create signIn function
-        // const response = await signIn({
-        //   email: values.email,
-        //   password: values.password,
-        // })
-        // if (response) router.push("/")
+        const response = await signIn({
+          email: values.email,
+          password: values.password,
+        })
+        if (response) {
+          router.push("/sign-in")
+          console.log("Sign In Success")
+        }
       }
     } catch (error) {
       console.log(error)
     } finally {
       setIsLoading(false)
     }
-
   }
 
   return (
