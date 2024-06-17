@@ -217,7 +217,7 @@ export const authFormSchema = (type: string) => z.object({
   county: type === "sign-in" ? z.string().optional() : z
     .string()
     .min(4, { message: "County must be at least 4 characters" }),
-  postCode: type === "sign-in" ? z.string().optional() : z
+  postalCode: type === "sign-in" ? z.string().optional() : z
     .string()
     .min(5, { message: "Post code must be at least 5 characters" }),
   dateOfBirth: type === "sign-in" ? z.string().optional() : z

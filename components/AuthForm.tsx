@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { z } from 'zod'
+import { date, z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
 import { Button } from "@/components/ui/button"
@@ -12,6 +12,8 @@ import { authFormSchema } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { signIn, signUp } from '@/lib/actions/user.actions'
+import PlaidLink from './PlaidLink'
+import { count } from 'console'
 
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter()
@@ -36,7 +38,19 @@ const AuthForm = ({ type }: { type: string }) => {
     try {
       // TODO - Create plaid link token
       if (type === "sign-up") {
-        const newUser = await signUp(values)
+        const userData = {
+          firstName: values.firstName!,
+          lastName: values.lastName!,
+          address: values.address!,
+          city: values.city!,
+          county: values.county!,
+          postalCode: values.postalCode!,
+          dateOfBirth: values.dateOfBirth!,
+          nin: values.nin!,
+          email: values.email,
+          password: values.password,
+        }
+        const newUser = await signUp(userData)
         setUser(newUser)
       } else if (type === "sign-in") {
         const response = await signIn({
@@ -81,8 +95,7 @@ const AuthForm = ({ type }: { type: string }) => {
       </header>
       {user ? (
         <div className='flex flex-col gap-4'>
-          {/* TODO - Plaid Link */}
-          Plaid Link
+          <PlaidLink user={user} variant="primary" />
 
         </div>
       ) : (
@@ -100,7 +113,7 @@ const AuthForm = ({ type }: { type: string }) => {
                     <CustomInput control={form.control} name="city" label="City" placeholder="ex: London" type="text" />
                     <div className='flex gap-4'>
                       <CustomInput control={form.control} name="county" label="County" placeholder="ex: Greater London" type="text" />
-                      <CustomInput control={form.control} name="postCode" label="Post Code" placeholder="ex: N1 2HA" type="text" />
+                      <CustomInput control={form.control} name="postalCode" label="Post Code" placeholder="ex: N1 2HA" type="text" />
                     </div>
                     <div className='flex gap-4'>
                       <CustomInput control={form.control} name="dateOfBirth" label="Date of Birth" placeholder="YYYY-MM-DD" type="text" />
