@@ -41,12 +41,12 @@ const AuthForm = ({ type }: { type: string }) => {
         const userData = {
           firstName: values.firstName!,
           lastName: values.lastName!,
-          address: values.address!,
+          address1: values.address1!,
           city: values.city!,
-          county: values.county!,
+          state: values.state!,
           postalCode: values.postalCode!,
           dateOfBirth: values.dateOfBirth!,
-          nin: values.nin!,
+          ssn: values.ssn!,
           email: values.email,
           password: values.password,
         }
@@ -109,21 +109,21 @@ const AuthForm = ({ type }: { type: string }) => {
                       <CustomInput control={form.control} name="firstName" label="First Name" placeholder="Enter your first name" type="text" />
                       <CustomInput control={form.control} name="lastName" label="Last Name" placeholder="Enter your last name" type="text" />
                     </div>
-                    <CustomInput control={form.control} name="address" label="Address" placeholder="Enter your specific address" type="text" />
+                    <CustomInput control={form.control} name="address1" label="Address" placeholder="Enter your specific address" type="text" />
                     <CustomInput control={form.control} name="city" label="City" placeholder="ex: London" type="text" />
                     <div className='flex gap-4'>
-                      <CustomInput control={form.control} name="county" label="County" placeholder="ex: Greater London" type="text" />
+                      <CustomInput control={form.control} name="state" label="State" placeholder="ex: NY" type="text" />
                       <CustomInput control={form.control} name="postalCode" label="Post Code" placeholder="ex: N1 2HA" type="text" />
                     </div>
                     <div className='flex gap-4'>
                       <CustomInput control={form.control} name="dateOfBirth" label="Date of Birth" placeholder="YYYY-MM-DD" type="text" />
-                      <CustomInput control={form.control} name="nin" label="NIN" placeholder="ex: XX123456Z" type="text" />
+                      <CustomInput control={form.control} name="ssn" label="ssn" placeholder="ex: XX123456Z" type="text" />
                     </div>
                   </>
                 )
               }
               <>
-                <CustomInput control={form.control} name="email" label="Email address" placeholder="Enter your email" type="text" />
+                <CustomInput control={form.control} name="email" label="Email" placeholder="Enter your email" type="text" />
                 <CustomInput control={form.control} name="password" label="Password" placeholder="Enter your password" type="password" />
               </>
               <div className='flex flex-col gap-4'>

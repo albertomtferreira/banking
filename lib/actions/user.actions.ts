@@ -48,7 +48,7 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
 
     if (!dwollaCustomerUrl) throw new Error("Failed to create Dwolla Customer")
 
-    const dwollaCostumerId = await extractCustomerIdFromUrl(dwollaCustomerUrl)
+    const dwollaCustomerId = await extractCustomerIdFromUrl(dwollaCustomerUrl)
 
     const newUser = await database.createDocument(
       DATABASE_ID!,
@@ -57,7 +57,7 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
       {
         ...userData,
         userId: newUserAccount.$id,
-        dwollaCostumerId,
+        dwollaCustomerId,
         dwollaCustomerUrl,
       }
     );
@@ -71,7 +71,7 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
       sameSite: "strict",
       secure: true,
     });
-    return parseStringify(newUserAccount)
+    return parseStringify(newUser)
   } catch (error) {
     console.log("Error: ", error)
   }

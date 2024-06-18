@@ -208,26 +208,27 @@ export const authFormSchema = (type: string) => z.object({
     .string()
     .min(2, { message: "Last name must be at least 2 characters" })
     .max(30, { message: "Last name must not be longer than 30 characters" }),
-  address: type === "sign-in" ? z.string().optional() : z
+  address1: type === "sign-in" ? z.string().optional() : z
     .string()
     .min(4, { message: "Address must be at least 4 characters" }),
   city: type === "sign-in" ? z.string().optional() : z
     .string()
     .min(4, { message: "City must be at least 4 characters" }),
-  county: type === "sign-in" ? z.string().optional() : z
+  state: type === "sign-in" ? z.string().optional() : z
     .string()
-    .min(4, { message: "County must be at least 4 characters" }),
+    .min(2, { message: "State must be 2 characters. ex: NY" })
+    .max(2, { message: "State must be 2 characters. ex: NY" }),
   postalCode: type === "sign-in" ? z.string().optional() : z
     .string()
-    .min(5, { message: "Post code must be at least 5 characters" }),
+    .min(4, { message: "Post code must be at least 4 characters" }),
   dateOfBirth: type === "sign-in" ? z.string().optional() : z
     .string().refine((value) => {
       const date = new Date(value);
       return !isNaN(date.getTime());
     }, "Invalid date of birth"),
-  nin: type === "sign-in" ? z.string().optional() : z
+  ssn: type === "sign-in" ? z.string().optional() : z
     .string()
-    .min(8, { message: "NIN must be at 9 characters long" }),
+    .min(4, { message: "ssn must be 4 characters long" }),
 
   //Sign In & Sign Up
   email: z
