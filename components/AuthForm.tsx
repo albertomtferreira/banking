@@ -36,7 +36,6 @@ const AuthForm = ({ type }: { type: string }) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true)
     try {
-      // TODO - Create plaid link token
       if (type === "sign-up") {
         const userData = {
           firstName: values.firstName!,
