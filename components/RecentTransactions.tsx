@@ -35,7 +35,6 @@ const RecentTransactions = ({
       <Tabs defaultValue={appwriteItemId} className="w-full">
         <TabsList className='recent-transactions-tablist'>
           {accounts.map((account) => (
-            // FIXME - If only one account, disable the click
             <TabsTrigger key={account.id} value={account.id}>
               <BankTabItem
                 key={account.id}
@@ -64,8 +63,6 @@ const RecentTransactions = ({
                 <Pagination page={page} totalPages={totalPages} />
               </div>
             )}
-
-            <Pagination page={page} totalPages={totalPages} />
           </TabsContent>
         ))}
 

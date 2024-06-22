@@ -6,19 +6,24 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 import Footer from './Footer'
-import PlaidLink from './PlaidLink'
+import { PlaidLink } from './PlaidLink'
 
 const Sidebar = ({ user }: SidebarProps) => {
   const pathname = usePathname()
+
   return (
+
     <section className='sidebar'>
       <nav className='flex flex-col gap-4'>
+        {/* LOGO and Company Name */}
         <Link href="/" className='flex mb-12 cursor-pointer items-center gap-2'>
           <Image src="./icons/logo.svg" width={34} height={34} alt="Horizon Logo" className='size-[24px] max-xl:size-14' />
           <h1 className='sidebar-logo'>Horizon</h1>
         </Link>
+        {/* Sidebar Links mapped from import { sidebarLinks } from '@/constants' */}
         {sidebarLinks.map((item) => {
           const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`)
+
           return (
             <Link href={item.route} key={item.label} className={cn("sidebar-link", { "bg-bank-gradient": isActive })}>
               <div className='relative size-6'>
@@ -33,6 +38,7 @@ const Sidebar = ({ user }: SidebarProps) => {
             </Link>
           )
         })}
+        {/* Connect Bank */}
         <PlaidLink user={user} />
       </nav>
       <Footer user={user} />

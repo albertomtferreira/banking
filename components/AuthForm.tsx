@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { date, z } from 'zod'
+import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
 import { Button } from "@/components/ui/button"
@@ -12,8 +12,8 @@ import { authFormSchema } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { signIn, signUp } from '@/lib/actions/user.actions'
-import PlaidLink from './PlaidLink'
-import { count } from 'console'
+import { PlaidLink } from './PlaidLink'
+
 
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter()
@@ -57,12 +57,14 @@ const AuthForm = ({ type }: { type: string }) => {
           password: values.password,
         })
         if (response) {
-          router.push("/sign-in")
-          console.log("Sign In Success")
+          router.push("/")
+        } else {
+          alert("Invalid Credentials")
         }
       }
     } catch (error) {
       console.log(error)
+
     } finally {
       setIsLoading(false)
     }

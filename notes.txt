@@ -1,28 +1,49 @@
-React
-NextJS
-
-Plaid to wolrd leadind API banking - variety of test accounts and institutions available to test - Using Sandbox
-
-appwrite - open source to build the backend
-
-ChartJS to create ChartJS
-
-Tailwind css with shadcn/ui
-
-sentry for security
-
-
-Simple Browser
-
-
-Add new data fields
-  AuthForm
-  index
-  utils
-
-
 TODO
 Validate balances:
-  available balance
+  include available balance and pending Transactions to affect balance
 
-test if can take account overdrawn
+RightSideBar
+  Set budgets to make the "left amount" dynamic
+
+My-Banks
+  add a tag for hover "card" to explain that on click goes to Transactions History
+
+Transactions History
+  DropDown box to select to allow toggling between accounts
+
+Validations
+  email Validation
+  strong password
+
+Responsiveness
+  Redesign for mobile devices
+
+Migrate database to UK
+
+Auth
+  Include OAuth2 Providers from appwrite (https://cloud.appwrite.io/console/project-666f4415003db9f7ed15/auth/settings)
+
+
+
+BUG
+  SignUp
+    State, if not in capitals does not register
+      Error should be returned if state not available
+      Is registering on appwrite and not on dwolla - next won't be able to use the same email address
+  RecentTransactions
+    When toggling between accounts on Recent Transactions on homepage does not load the Transactions until reload of the page (cache! - see https://www.youtube.com/watch?v=3RyguimNe8s)
+  Transfer Funds
+    Validate balance and return error if balance not available
+  ConnectBank
+    Button should be disabled while connecting
+
+
+FIXED
+  SignIn
+    After success on sign in, does not redirect to homepage
+  RecentTransactions
+    Pagination appears duplicated on homepage
+  RightSideBar
+    Add Bank button not working
+  SideBar
+    Connect Bank Component not fully responsive
