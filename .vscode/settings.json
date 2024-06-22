@@ -1,11 +1,4 @@
 {
-  "cSpell.words": [
-    "appwrite",
-    "banktab",
-    "dwolla"
-  ],
-  "cSpell.ignoreWords": [
-    "Banm",
-    "Tgjo"
-  ]
+  "cSpell.words": ["appwrite", "banktab", "dwolla", "Paypass"],
+  "cSpell.ignoreWords": ["Banm", "Tgjo"]
 }
