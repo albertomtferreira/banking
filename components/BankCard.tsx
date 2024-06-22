@@ -55,9 +55,6 @@ const BankCard = ({ account, userName, showBalance = true }: CreditCardProps) =>
           className='absolute left-0 top-0'
         />
       </Link>
-      {/* TODO */}
-      {/* COPY CARD NUMBERS */}
-
       {showBalance && <Copy title={account?.shareableId} />}
     </div>
   )

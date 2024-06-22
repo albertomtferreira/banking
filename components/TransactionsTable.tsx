@@ -20,7 +20,7 @@ const CategoryBadge = ({ category }: CategoryBadgeProps) => {
   )
 }
 
-
+// TODO - fix the caching - recent transactions when toggled only works after refreshing the page
 const TransactionsTable = ({ transactions }: TransactionTableProps) => {
   return (
     <Table>
