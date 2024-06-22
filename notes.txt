@@ -19,3 +19,10 @@ Add new data fields
   AuthForm
   index
   utils
+
+
+TODO
+Validate balances:
+  available balance
+
+test if can take account overdrawn
